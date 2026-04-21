@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthLayout from '../../Components/organisms/AuthLayout';
-import Form from '../../Components/molecules/Form';
-import Button from '../../Components/atoms/Button';
-import Link from '../../Components/atoms/Link';
+import AuthLayout from '../../Components/Organisms/AuthLayout';
+import Form from '../../Components/Molecules/Form';
+import Button from '../../Components/Atoms/Button';
+import Link from '../../Components/Atoms/Link';
+import { dummyUser } from '../../Data/Dummy';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,9 +16,13 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.email && formData.password) {
+    const { email, password } = formData;
+    if (email === dummyUser.email && password === dummyUser.password) {
+      localStorage.setItem("user", JSON.stringify(dummyUser));
       alert("Verification successful. Granting access...");
       navigate('/admin');
+    } else {
+      alert("Email atau password salah!");
     }
   };
 

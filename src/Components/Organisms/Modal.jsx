@@ -1,7 +1,7 @@
 import React from 'react';
 import { X } from 'lucide-react';
-import Button from '../atoms/Button';
-import Heading from '../atoms/Heading';
+import Button from '../Atoms/Button';
+import Heading from '../Atoms/Heading';
 
 const Modal = ({ isOpen, onClose, title, children }) => {
   if (!isOpen) return null;
@@ -26,11 +26,6 @@ const Modal = ({ isOpen, onClose, title, children }) => {
 
         <div className="px-12 py-10 max-h-[60vh] overflow-y-auto custom-scrollbar">
           {children}
-        </div>
-
-        <div className="px-12 py-10 bg-slate-50/50 border-t border-slate-100 flex justify-end gap-4">
-          <Button variant="secondary" onClick={onClose} className="px-10">Abort</Button>
-          <Button variant="primary" onClick={onClose} className="px-12">Submit & Data</Button>
         </div>
       </div>
     </div>

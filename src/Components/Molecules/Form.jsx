@@ -1,6 +1,6 @@
 import React from 'react';
-import Label from '../atoms/Label';
-import Input from '../atoms/Input';
+import Label from '../Atoms/Label';
+import Input from '../Atoms/Input';
 
 const Form = ({ label, type, name, placeholder, required, value, onChange, className = "" }) => {
   return (
