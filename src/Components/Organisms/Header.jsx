@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import { Search, Bell, ChevronDown, User, Settings, LogOut, Menu } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { confirmLogout } from '../../Utils/Helpers/SwalHelpers';
+
 
 const Header = ({ onMenuClick, title = "Mahasiswa" }) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    if (confirm("Logout from system?")) {
+    confirmLogout(() => {
       navigate('/login');
-    }
+    });
   };
+
 
   return (
     <header className="bg-white/80 backdrop-blur-2xl border-b border-slate-100 px-8 py-5 flex justify-between items-center sticky top-0 z-40">

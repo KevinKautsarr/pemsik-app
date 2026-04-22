@@ -5,6 +5,8 @@ import Form from '../../Components/Molecules/Form';
 import Button from '../../Components/Atoms/Button';
 import Link from '../../Components/Atoms/Link';
 import { dummyUser } from '../../Data/Dummy';
+import { toastSuccess, toastError } from '../../Utils/Helpers/ToastHelpers';
+
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,11 +21,12 @@ const Login = () => {
     const { email, password } = formData;
     if (email === dummyUser.email && password === dummyUser.password) {
       localStorage.setItem("user", JSON.stringify(dummyUser));
-      alert("Verification successful. Granting access...");
+      toastSuccess("Verification successful. Granting access...");
       navigate('/admin');
     } else {
-      alert("Email atau password salah!");
+      toastError("Email atau password salah!");
     }
+
   };
 
   return (

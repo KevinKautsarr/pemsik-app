@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./Pages/Auth/Login";
-import Mahasiswa from "./Pages/Admin/Mahasiswa";
+import Mahasiswa from "./Pages/Admin/Mahasiswa/Mahasiswa";
 import MahasiswaDetail from "./Pages/Admin/MahasiswaDetail";
 import "./App.css";
 
