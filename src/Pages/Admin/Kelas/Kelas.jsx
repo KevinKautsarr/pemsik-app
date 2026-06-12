@@ -1,35 +1,29 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import MahasiswaTable from './MahasiswaTable';
-import MahasiswaModal from './MahasiswaModal';
+import KelasTable from './KelasTable';
+import KelasModal from './KelasModal';
 import { confirmDelete, confirmUpdate } from '../../../Utils/Helpers/SwalHelpers';
 import { toastError } from '../../../Utils/Helpers/ToastHelpers';
 import { useAuthStateContext } from '../../../Utils/Contexts/AuthContext';
 import {
-  useMahasiswa,
-  useStoreMahasiswa,
-  useUpdateMahasiswa,
-  useDeleteMahasiswa
-} from '../../../Utils/Hooks/useMahasiswa';
-import { useKelas } from '../../../Utils/Hooks/useKelas';
-import { useMataKuliah } from '../../../Utils/Hooks/useMataKuliah';
+  useKelas,
+  useStoreKelas,
+  useUpdateKelas,
+  useDeleteKelas
+} from '../../../Utils/Hooks/useKelas';
 
-const Mahasiswa = () => {
-  const navigate = useNavigate();
+const Kelas = () => {
   const { user } = useAuthStateContext();
 
   // --- REACT QUERY DATA FETCHING ---
-  const { data: mahasiswa = [], isLoading: isMahasiswaLoading } = useMahasiswa();
-  const { data: kelas = [] } = useKelas();
-  const { data: mataKuliah = [] } = useMataKuliah();
+  const { data: kelas = [], isLoading: isKelasLoading } = useKelas();
 
   // --- REACT QUERY MUTATIONS ---
-  const { mutate: store } = useStoreMahasiswa();
-  const { mutate: update } = useUpdateMahasiswa();
-  const { mutate: remove } = useDeleteMahasiswa();
+  const { mutate: store } = useStoreKelas();
+  const { mutate: update } = useUpdateKelas();
+  const { mutate: remove } = useDeleteKelas();
 
-  // --- LOCAL FORM STATE ---
-  const [form, setForm] = useState({ nim: '', nama: '' });
+  // --- STATE MANAGEMENT ---
+  const [form, setForm] = useState({ nama: '' });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
@@ -44,24 +38,23 @@ const Mahasiswa = () => {
   };
 
   const openAddModal = () => {
-    setForm({ nim: '', nama: '' });
+    setForm({ nama: '' });
     setSelectedId(null);
     setIsEdit(false);
     setIsModalOpen(true);
   };
 
-  const handleEdit = (mhs) => {
-    setForm({ nim: mhs.nim, nama: mhs.nama });
-    setSelectedId(mhs.id);
+  const handleEdit = (kls) => {
+    setForm({ nama: kls.nama });
+    setSelectedId(kls.id);
     setIsEdit(true);
     setIsModalOpen(true);
   };
 
-  // --- CRUD ACTION HANDLERS ---
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!form.nim || !form.nama) {
-      toastError("NIM dan Nama wajib diisi!");
+    if (!form.nama) {
+      toastError("Nama kelas wajib diisi!");
       return;
     }
     if (isEdit) {
@@ -70,9 +63,9 @@ const Mahasiswa = () => {
         setIsModalOpen(false);
       });
     } else {
-      const exists = mahasiswa.find((m) => m.nim === form.nim);
+      const exists = kelas.find((k) => k.nama.toLowerCase() === form.nama.toLowerCase());
       if (exists) {
-        toastError("NIM sudah terdaftar!");
+        toastError("Nama kelas sudah terdaftar!");
         return;
       }
       store(form);
@@ -90,36 +83,35 @@ const Mahasiswa = () => {
     <>
       <div className="bg-white shadow rounded-lg p-4">
         <div className="flex justify-between items-center mb-4 border-b border-gray-100 pb-2">
-          <h2 className="text-lg font-semibold text-gray-800">Daftar Mahasiswa</h2>
-          {user?.permission?.includes("mahasiswa.create") && (
+          <h2 className="text-lg font-semibold text-gray-800">Daftar Kelas</h2>
+          {user?.permission?.includes("kelas.create") && (
             <button 
               onClick={openAddModal} 
               className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
             >
-              + Tambah Mahasiswa
+              + Tambah Kelas
             </button>
           )}
         </div>
 
-        {/* Table Mahasiswa */}
-        {user?.permission?.includes("mahasiswa.read") ? (
-          isMahasiswaLoading ? (
-            <div className="py-6 text-center text-gray-500">Memuat data mahasiswa...</div>
+        {/* Table Kelas */}
+        {user?.permission?.includes("kelas.read") ? (
+          isKelasLoading ? (
+            <div className="py-6 text-center text-gray-500">Memuat data kelas...</div>
           ) : (
-            <MahasiswaTable 
-              data={mahasiswa} 
+            <KelasTable 
+              data={kelas} 
               onEdit={handleEdit} 
               onDelete={handleDelete} 
-              onDetail={(id) => navigate(`/admin/mahasiswa/${id}`)}
             />
           )
         ) : (
-          <p className="text-center text-gray-500 py-6">Anda tidak memiliki hak akses untuk melihat data mahasiswa.</p>
+          <p className="text-center text-gray-500 py-6">Anda tidak memiliki hak akses untuk melihat data kelas.</p>
         )}
       </div>
 
       {/* Modal Form */}
-      <MahasiswaModal 
+      <KelasModal 
         isOpen={isModalOpen}
         isEdit={isEdit}
         form={form}
@@ -131,4 +123,4 @@ const Mahasiswa = () => {
   );
 };
 
-export default Mahasiswa;
+export default Kelas;

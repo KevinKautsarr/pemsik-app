@@ -22,6 +22,11 @@
       "matakuliah.create",
       "matakuliah.update",
       "matakuliah.delete",
+      "kelas.page",
+      "kelas.read",
+      "kelas.create",
+      "kelas.update",
+      "kelas.delete",
       "user.page",
       "user.read",
       "user.update"

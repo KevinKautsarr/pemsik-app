@@ -10,6 +10,7 @@ const Sidebar = ({ isOpen }) => {
     { label: "Mahasiswa", href: "/admin/mahasiswa", icon: "🎓", permission: "mahasiswa.page" },
     { label: "Dosen", href: "/admin/dosen", icon: "👨‍🏫", permission: "dosen.page" },
     { label: "Mata Kuliah", href: "/admin/matakuliah", icon: "📚", permission: "matakuliah.page" },
+    { label: "Kelas", href: "/admin/kelas", icon: "🏫", permission: "kelas.page" },
     { label: "User", href: "/admin/user", icon: "👤", permission: "user.page" },
   ];
 

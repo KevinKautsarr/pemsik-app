@@ -23,6 +23,9 @@ const AdminLayout = () => {
     if (path.includes('/admin/user')) {
       return "User Management";
     }
+    if (path.includes('/admin/kelas')) {
+      return "Kelas";
+    }
     return "Dashboard";
   };
 

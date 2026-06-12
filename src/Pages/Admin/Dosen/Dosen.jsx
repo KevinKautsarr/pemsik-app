@@ -1,34 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { getAllDosen, storeDosen, updateDosen, deleteDosen } from '../../../Utils/Apis/DosenApi';
+import React, { useState } from 'react';
 import DosenTable from './DosenTable';
 import DosenModal from './DosenModal';
 import { confirmDelete, confirmUpdate } from '../../../Utils/Helpers/SwalHelpers';
-import { toastSuccess, toastError } from '../../../Utils/Helpers/ToastHelpers';
+import { toastError } from '../../../Utils/Helpers/ToastHelpers';
 import { useAuthStateContext } from '../../../Utils/Contexts/AuthContext';
+import {
+  useDosen,
+  useStoreDosen,
+  useUpdateDosen,
+  useDeleteDosen
+} from '../../../Utils/Hooks/useDosen';
 
 const Dosen = () => {
   const { user } = useAuthStateContext();
 
+  // --- REACT QUERY DATA FETCHING ---
+  const { data: dosen = [], isLoading: isDosenLoading } = useDosen();
+
+  // --- REACT QUERY MUTATIONS ---
+  const { mutate: store } = useStoreDosen();
+  const { mutate: update } = useUpdateDosen();
+  const { mutate: remove } = useDeleteDosen();
+
   // --- STATE MANAGEMENT ---
-  const [dosen, setDosen] = useState([]);
   const [form, setForm] = useState({ nidn: '', nama: '', email: '', bidang: '' });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
-
-  const fetchDosen = async () => {
-    try {
-      const res = await getAllDosen();
-      setDosen(res.data);
-    } catch (err) {
-      toastError("Gagal mengambil data dosen");
-    }
-  };
-
-  // --- INITIAL DATA LOAD ---
-  useEffect(() => {
-    fetchDosen();
-  }, []);
 
   // --- FORM HANDLERS ---
   const handleChange = (e) => {
@@ -53,36 +51,6 @@ const Dosen = () => {
     setIsModalOpen(true);
   };
 
-  // --- CRUD LOGIC ---
-  const storeDosenData = async (newData) => {
-    const exists = dosen.find((d) => d.nidn === newData.nidn);
-    if (exists) {
-      toastError("Gagal: NIDN sudah terdaftar!");
-      return;
-    }
-    try {
-      await storeDosen(newData);
-      fetchDosen();
-      toastSuccess("Dosen berhasil ditambah!");
-      setIsModalOpen(false);
-    } catch (err) {
-      toastError("Gagal menambahkan data dosen");
-    }
-  };
-
-  const updateDosenData = async (newData) => {
-    confirmUpdate(async () => {
-      try {
-        await updateDosen(selectedId, { id: selectedId, ...newData });
-        fetchDosen();
-        toastSuccess("Dosen berhasil di-edit!");
-        setIsModalOpen(false);
-      } catch (err) {
-        toastError("Gagal memperbarui data");
-      }
-    });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!form.nidn || !form.nama || !form.email || !form.bidang) {
@@ -90,21 +58,24 @@ const Dosen = () => {
       return;
     }
     if (isEdit) {
-      updateDosenData(form);
+      confirmUpdate(() => {
+        update({ id: selectedId, data: { id: selectedId, ...form } });
+        setIsModalOpen(false);
+      });
     } else {
-      storeDosenData(form);
+      const exists = dosen.find((d) => d.nidn === form.nidn);
+      if (exists) {
+        toastError("NIDN sudah terdaftar!");
+        return;
+      }
+      store(form);
+      setIsModalOpen(false);
     }
   };
 
   const handleDelete = (id) => {
-    confirmDelete(async () => {
-      try {
-        await deleteDosen(id);
-        fetchDosen();
-        toastSuccess("Dosen berhasil terhapus!");
-      } catch (err) {
-        toastError("Gagal menghapus data");
-      }
+    confirmDelete(() => {
+      remove(id);
     });
   };
 
@@ -125,11 +96,15 @@ const Dosen = () => {
 
         {/* Table Dosen */}
         {user?.permission?.includes("dosen.read") ? (
-          <DosenTable 
-            data={dosen} 
-            onEdit={handleEdit} 
-            onDelete={handleDelete} 
-          />
+          isDosenLoading ? (
+            <div className="py-6 text-center text-gray-500">Memuat data dosen...</div>
+          ) : (
+            <DosenTable 
+              data={dosen} 
+              onEdit={handleEdit} 
+              onDelete={handleDelete} 
+            />
+          )
         ) : (
           <p className="text-center text-gray-500 py-6">Anda tidak memiliki hak akses untuk melihat data dosen.</p>
         )}

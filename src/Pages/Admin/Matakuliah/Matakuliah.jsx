@@ -1,34 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { getAllMatakuliah, storeMatakuliah, updateMatakuliah, deleteMatakuliah } from '../../../Utils/Apis/MatakuliahApi';
+import React, { useState } from 'react';
 import MatakuliahTable from './MatakuliahTable';
 import MatakuliahModal from './MatakuliahModal';
 import { confirmDelete, confirmUpdate } from '../../../Utils/Helpers/SwalHelpers';
-import { toastSuccess, toastError } from '../../../Utils/Helpers/ToastHelpers';
+import { toastError } from '../../../Utils/Helpers/ToastHelpers';
 import { useAuthStateContext } from '../../../Utils/Contexts/AuthContext';
+import {
+  useMataKuliah,
+  useStoreMataKuliah,
+  useUpdateMataKuliah,
+  useDeleteMataKuliah
+} from '../../../Utils/Hooks/useMataKuliah';
 
 const Matakuliah = () => {
   const { user } = useAuthStateContext();
 
+  // --- REACT QUERY DATA FETCHING ---
+  const { data: matakuliah = [], isLoading: isMataKuliahLoading } = useMataKuliah();
+
+  // --- REACT QUERY MUTATIONS ---
+  const { mutate: store } = useStoreMataKuliah();
+  const { mutate: update } = useUpdateMataKuliah();
+  const { mutate: remove } = useDeleteMataKuliah();
+
   // --- STATE MANAGEMENT ---
-  const [matakuliah, setMatakuliah] = useState([]);
   const [form, setForm] = useState({ kodemk: '', nama: '', sks: '', semester: '' });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
-
-  const fetchMatakuliah = async () => {
-    try {
-      const res = await getAllMatakuliah();
-      setMatakuliah(res.data);
-    } catch (err) {
-      toastError("Gagal mengambil data mata kuliah");
-    }
-  };
-
-  // --- INITIAL DATA LOAD ---
-  useEffect(() => {
-    fetchMatakuliah();
-  }, []);
 
   // --- FORM HANDLERS ---
   const handleChange = (e) => {
@@ -53,70 +51,38 @@ const Matakuliah = () => {
     setIsModalOpen(true);
   };
 
-  // --- CRUD LOGIC ---
-  const storeMatakuliahData = async (newData) => {
-    const exists = matakuliah.find((m) => m.kodemk === newData.kodemk);
-    if (exists) {
-      toastError("Gagal: Kode MK sudah terdaftar!");
-      return;
-    }
-    try {
-      // Convert numeric fields to integers
-      const payload = {
-        ...newData,
-        sks: parseInt(newData.sks, 10),
-        semester: parseInt(newData.semester, 10)
-      };
-      await storeMatakuliah(payload);
-      fetchMatakuliah();
-      toastSuccess("Mata kuliah berhasil ditambah!");
-      setIsModalOpen(false);
-    } catch (err) {
-      toastError("Gagal menambahkan data mata kuliah");
-    }
-  };
-
-  const updateMatakuliahData = async (newData) => {
-    confirmUpdate(async () => {
-      try {
-        const payload = {
-          id: selectedId,
-          ...newData,
-          sks: parseInt(newData.sks, 10),
-          semester: parseInt(newData.semester, 10)
-        };
-        await updateMatakuliah(selectedId, payload);
-        fetchMatakuliah();
-        toastSuccess("Mata kuliah berhasil di-edit!");
-        setIsModalOpen(false);
-      } catch (err) {
-        toastError("Gagal memperbarui data");
-      }
-    });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!form.kodemk || !form.nama || !form.sks || !form.semester) {
       toastError("Semua field wajib diisi!");
       return;
     }
+
+    const payload = {
+      ...form,
+      sks: parseInt(form.sks, 10),
+      semester: parseInt(form.semester, 10)
+    };
+
     if (isEdit) {
-      updateMatakuliahData(form);
+      confirmUpdate(() => {
+        update({ id: selectedId, data: { id: selectedId, ...payload } });
+        setIsModalOpen(false);
+      });
     } else {
-      storeMatakuliahData(form);
+      const exists = matakuliah.find((m) => m.kodemk === form.kodemk);
+      if (exists) {
+        toastError("Kode MK sudah terdaftar!");
+        return;
+      }
+      store(payload);
+      setIsModalOpen(false);
     }
   };
 
   const handleDelete = (id) => {
-    confirmDelete(async () => {
-      try {
-        await deleteMatakuliah(id);
-        fetchMatakuliah();
-        toastSuccess("Mata kuliah berhasil terhapus!");
-      } catch (err) {
-        toastError("Gagal menghapus data");
-      }
+    confirmDelete(() => {
+      remove(id);
     });
   };
 
@@ -137,11 +103,15 @@ const Matakuliah = () => {
 
         {/* Table Mata Kuliah */}
         {user?.permission?.includes("matakuliah.read") ? (
-          <MatakuliahTable 
-            data={matakuliah} 
-            onEdit={handleEdit} 
-            onDelete={handleDelete} 
-          />
+          isMataKuliahLoading ? (
+            <div className="py-6 text-center text-gray-500">Memuat data mata kuliah...</div>
+          ) : (
+            <MatakuliahTable 
+              data={matakuliah} 
+              onEdit={handleEdit} 
+              onDelete={handleDelete} 
+            />
+          )
         ) : (
           <p className="text-center text-gray-500 py-6">Anda tidak memiliki hak akses untuk melihat data mata kuliah.</p>
         )}
