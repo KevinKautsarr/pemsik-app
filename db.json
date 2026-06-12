@@ -1,4 +1,105 @@
 {
+  "chart": {
+    "students": [
+      {
+        "id": 1,
+        "faculty": "Teknik",
+        "count": 320
+      },
+      {
+        "id": 2,
+        "faculty": "Ekonomi",
+        "count": 210
+      },
+      {
+        "id": 3,
+        "faculty": "Kedokteran",
+        "count": 150
+      },
+      {
+        "id": 4,
+        "faculty": "Hukum",
+        "count": 180
+      },
+      {
+        "id": 5,
+        "faculty": "Ilmu Komputer",
+        "count": 260
+      }
+    ],
+    "genderRatio": [
+      {
+        "id": 1,
+        "gender": "Laki-laki",
+        "count": 600
+      },
+      {
+        "id": 2,
+        "gender": "Perempuan",
+        "count": 700
+      }
+    ],
+    "registrations": [
+      {
+        "id": 1,
+        "year": 2020,
+        "total": 500
+      },
+      {
+        "id": 2,
+        "year": 2021,
+        "total": 580
+      },
+      {
+        "id": 3,
+        "year": 2022,
+        "total": 640
+      },
+      {
+        "id": 4,
+        "year": 2023,
+        "total": 710
+      }
+    ],
+    "gradeDistribution": [
+      {
+        "subject": "TI",
+        "A": 120,
+        "B": 80,
+        "C": 40
+      },
+      {
+        "subject": "SI",
+        "A": 100,
+        "B": 90,
+        "C": 50
+      },
+      {
+        "subject": "MI",
+        "A": 110,
+        "B": 85,
+        "C": 30
+      }
+    ],
+    "lecturerRanks": [
+      {
+        "rank": "Asisten Ahli",
+        "count": 30
+      },
+      {
+        "rank": "Lektor",
+        "count": 50
+      },
+      {
+        "rank": "Lektor Kepala",
+        "count": 40
+      },
+      {
+        "rank": "Guru Besar",
+        "count": 10
+      }
+    ]
+  },
   "dosen": [
     {
       "id": 1,
@@ -13,13 +114,6 @@
       "nama": "Rina Lestari, M.Kom.",
       "email": "rina.lestari@dsn.dinus.ac.id",
       "bidang": "Kecerdasan Buatan"
-    },
-    {
-      "nidn": "000002",
-      "nama": "Jokowidodo",
-      "email": "joko@gmail.com",
-      "bidang": "presiden",
-      "id": 3
     }
   ],
   "kelas": [
@@ -34,10 +128,6 @@
     {
       "id": 3,
       "nama": "TI-C"
-    },
-    {
-      "nama": "TI-COBA",
-      "id": 4
     }
   ],
   "mahasiswa": [
@@ -61,11 +151,6 @@
       "nama": "Budi Santoso",
       "status": false,
       "ips": 3.2
-    },
-    {
-      "nim": "A11.2023.15128",
-      "nama": "Muhammad Kevin Kautsar",
-      "id": 4
     }
   ],
   "matakuliah": [
@@ -82,13 +167,6 @@
       "nama": "Analisis dan Perancangan Sistem",
       "sks": 4,
       "semester": 4
-    },
-    {
-      "kodemk": "00000002",
-      "nama": "Bahasa Inggris",
-      "sks": 4,
-      "semester": 8,
-      "id": 3
     }
   ],
   "user": [
