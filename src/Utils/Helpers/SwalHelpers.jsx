@@ -40,7 +40,7 @@ export const confirmUpdate = (onConfirm) => {
   }).then((result) => {
     if (result.isConfirmed) {
       onConfirm();
-      // Swal.fire("Diperbarui!", "Data berhasil diperbarui.", "success");
+      Swal.fire("Diperbarui!", "Data berhasil diperbarui.", "success");
     }
   });
 };

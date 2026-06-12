@@ -1,23 +1,84 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import Login from "./Pages/Auth/Login";
+import Register from "./Pages/Auth/Register";
 import Mahasiswa from "./Pages/Admin/Mahasiswa/Mahasiswa";
 import MahasiswaDetail from "./Pages/Admin/MahasiswaDetail";
+import Dosen from "./Pages/Admin/Dosen/Dosen";
+import Matakuliah from "./Pages/Admin/Matakuliah/Matakuliah";
+import Dashboard from "./Pages/Admin/Dashboard";
+import PageNotFound from "./Pages/Error/PageNotFound";
+import AuthLayout from "./Components/Organisms/AuthLayout";
+import AdminLayout from "./Components/Organisms/AdminLayout";
+import ProtectedRoute from "./Components/ProtectedRoute";
 import "./App.css";
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Navigate to="/login" replace />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "register",
+        element: <Register />,
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    element: (
+      <ProtectedRoute>
+        <AdminLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <Navigate to="dashboard" replace />,
+      },
+      {
+        path: "dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "mahasiswa",
+        children: [
+          {
+            index: true,
+            element: <Mahasiswa />,
+          },
+          {
+            path: ":id",
+            element: <MahasiswaDetail />,
+          },
+        ],
+      },
+      {
+        path: "dosen",
+        element: <Dosen />,
+      },
+      {
+        path: "matakuliah",
+        element: <Matakuliah />,
+      },
+    ],
+  },
+  {
+    path: "*",
+    element: <PageNotFound />,
+  },
+]);
+
 const App = () => {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/admin" element={<Navigate to="/admin/mahasiswa" replace />} />
-        <Route path="/admin/mahasiswa" element={<Mahasiswa />} />
-        <Route path="/admin/mahasiswa/:nim" element={<MahasiswaDetail />} />
-        <Route path="*" element={<Navigate to="/login" replace />} />
-      </Routes>
-    </Router>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App;

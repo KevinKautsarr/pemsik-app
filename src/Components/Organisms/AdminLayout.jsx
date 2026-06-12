@@ -1,25 +1,40 @@
 import React, { useState } from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import Footer from './Footer';
 
-const AdminLayout = ({ children, pageTitle }) => {
+const AdminLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const location = useLocation();
+
+  // Dynamically resolve page title based on current route path
+  const getPageTitle = () => {
+    const path = location.pathname;
+    if (path.includes('/admin/mahasiswa')) {
+      return "Mahasiswa";
+    }
+    if (path.includes('/admin/dosen')) {
+      return "Dosen";
+    }
+    if (path.includes('/admin/matakuliah')) {
+      return "Mata Kuliah";
+    }
+    return "Dashboard";
+  };
 
   return (
-    <div className="flex bg-slate-50 min-h-screen selection:bg-blue-100">
+    <div className="flex min-h-screen bg-gray-100 selection:bg-blue-100 w-full">
       <Sidebar isOpen={isSidebarOpen} />
       
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex flex-col flex-1 min-w-0">
         <Header 
           onMenuClick={() => setIsSidebarOpen(!isSidebarOpen)} 
-          title={pageTitle}
+          title={getPageTitle()}
         />
         
-        <main className="flex-1 p-8 lg:p-14 overflow-y-auto">
-          <div className="max-w-7xl mx-auto">
-            {children}
-          </div>
+        <main className="flex-1 p-6 overflow-x-auto">
+          <Outlet />
         </main>
         
         <Footer />

@@ -1,30 +1,24 @@
 import React from 'react';
-import { X } from 'lucide-react';
-import Button from '../Atoms/Button';
-import Heading from '../Atoms/Heading';
 
 const Modal = ({ isOpen, onClose, title, children }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
-      <div 
-        className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-all duration-500 animate-in fade-in"
-        onClick={onClose}
-      />
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+      {/* Backdrop click closer */}
+      <div className="absolute inset-0" onClick={onClose} />
       
-      <div className="relative bg-white rounded-[3.5rem] shadow-2xl w-full max-w-xl overflow-hidden animate-in zoom-in slide-in-from-bottom-20 duration-700">
-        <div className="px-12 py-10 border-b border-slate-50 flex items-center justify-between bg-white">
-          <Heading level={2} color="text-slate-900" spacing="mb-0" align="left">{title}</Heading>
+      <div className="relative bg-white rounded-lg shadow-lg w-full max-w-md z-10">
+        <div className="flex justify-between items-center p-4 border-b">
+          <h2 className="text-lg font-semibold text-gray-800">{title}</h2>
           <button 
-            onClick={onClose}
-            className="w-14 h-14 flex items-center justify-center bg-slate-50 hover:bg-rose-50 text-slate-400 hover:text-rose-500 rounded-[1.5rem] transition-all font-black border border-slate-100"
+            onClick={onClose} 
+            className="text-2xl text-gray-600 hover:text-red-500 font-semibold focus:outline-none"
           >
-            <X size={28} />
+            &times;
           </button>
         </div>
-
-        <div className="px-12 py-10 max-h-[60vh] overflow-y-auto custom-scrollbar">
+        <div className="p-4">
           {children}
         </div>
       </div>

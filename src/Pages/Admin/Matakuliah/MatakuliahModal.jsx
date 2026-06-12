@@ -3,7 +3,7 @@ import Modal from '../../../Components/Organisms/Modal';
 import Input from "../../../Components/Atoms/Input";
 import Label from "../../../Components/Atoms/Label";
 
-const MahasiswaModal = ({
+const MatakuliahModal = ({
   isOpen,
   isEdit,
   form,
@@ -17,29 +17,57 @@ const MahasiswaModal = ({
     <Modal 
       isOpen={isOpen} 
       onClose={onClose} 
-      title={isEdit ? "Edit Mahasiswa" : "Tambah Mahasiswa"}
+      title={isEdit ? "Edit Mata Kuliah" : "Tambah Mata Kuliah"}
     >
       <form onSubmit={onSubmit} className="space-y-4">
         <div>
-          <Label htmlFor="nim">NIM</Label>
+          <Label htmlFor="kodemk">Kode MK</Label>
           <Input 
-            name="nim"
-            value={form.nim}
+            name="kodemk"
+            value={form.kodemk}
             onChange={onChange}
-            readOnly={isEdit} // NIM tidak bisa diubah saat edit
-            placeholder="Masukkan NIM"
+            readOnly={isEdit}
+            placeholder="Masukkan Kode MK"
             required
             className="mt-1"
           />
         </div>
         <div>
-          <Label htmlFor="nama">Nama</Label>
+          <Label htmlFor="nama">Nama Mata Kuliah</Label>
           <Input 
             name="nama"
             value={form.nama}
             onChange={onChange}
-            placeholder="Masukkan Nama"
+            placeholder="Masukkan Nama Mata Kuliah"
             required
+            className="mt-1"
+          />
+        </div>
+        <div>
+          <Label htmlFor="sks">SKS</Label>
+          <Input 
+            type="number"
+            name="sks"
+            value={form.sks}
+            onChange={onChange}
+            placeholder="Masukkan Jumlah SKS"
+            required
+            min="1"
+            max="6"
+            className="mt-1"
+          />
+        </div>
+        <div>
+          <Label htmlFor="semester">Semester</Label>
+          <Input 
+            type="number"
+            name="semester"
+            value={form.semester}
+            onChange={onChange}
+            placeholder="Masukkan Semester"
+            required
+            min="1"
+            max="8"
             className="mt-1"
           />
         </div>
@@ -63,4 +91,4 @@ const MahasiswaModal = ({
   );
 };
 
-export default MahasiswaModal;
+export default MatakuliahModal;

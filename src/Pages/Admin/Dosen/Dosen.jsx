@@ -1,33 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { getAllMahasiswa, storeMahasiswa, updateMahasiswa, deleteMahasiswa } from '../../../Utils/Apis/MahasiswaApi';
-import MahasiswaTable from './MahasiswaTable';
-import MahasiswaModal from './MahasiswaModal';
+import { getAllDosen, storeDosen, updateDosen, deleteDosen } from '../../../Utils/Apis/DosenApi';
+import DosenTable from './DosenTable';
+import DosenModal from './DosenModal';
 import { confirmDelete, confirmUpdate } from '../../../Utils/Helpers/SwalHelpers';
 import { toastSuccess, toastError } from '../../../Utils/Helpers/ToastHelpers';
 
-const Mahasiswa = () => {
-  const navigate = useNavigate();
-
-  // --- STATE MANAGEMENT (LIFTED STATE) ---
-  const [mahasiswa, setMahasiswa] = useState([]);
-  const [form, setForm] = useState({ nim: '', nama: '' });
+const Dosen = () => {
+  // --- STATE MANAGEMENT ---
+  const [dosen, setDosen] = useState([]);
+  const [form, setForm] = useState({ nidn: '', nama: '', email: '', bidang: '' });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
 
-  const fetchMahasiswa = async () => {
+  const fetchDosen = async () => {
     try {
-      const res = await getAllMahasiswa();
-      setMahasiswa(res.data);
+      const res = await getAllDosen();
+      setDosen(res.data);
     } catch (err) {
-      toastError("Gagal mengambil data mahasiswa");
+      toastError("Gagal mengambil data dosen");
     }
   };
 
   // --- INITIAL DATA LOAD ---
   useEffect(() => {
-    fetchMahasiswa();
+    fetchDosen();
   }, []);
 
   // --- FORM HANDLERS ---
@@ -40,42 +37,42 @@ const Mahasiswa = () => {
   };
 
   const openAddModal = () => {
-    setForm({ nim: '', nama: '' });
+    setForm({ nidn: '', nama: '', email: '', bidang: '' });
     setSelectedId(null);
     setIsEdit(false);
     setIsModalOpen(true);
   };
 
-  const handleEdit = (mhs) => {
-    setForm({ nim: mhs.nim, nama: mhs.nama });
-    setSelectedId(mhs.id);
+  const handleEdit = (dsn) => {
+    setForm({ nidn: dsn.nidn, nama: dsn.nama, email: dsn.email, bidang: dsn.bidang });
+    setSelectedId(dsn.id);
     setIsEdit(true);
     setIsModalOpen(true);
   };
 
   // --- CRUD LOGIC ---
-  const storeMahasiswaData = async (newData) => {
-    const exists = mahasiswa.find((m) => m.nim === newData.nim);
+  const storeDosenData = async (newData) => {
+    const exists = dosen.find((d) => d.nidn === newData.nidn);
     if (exists) {
-      toastError("Gagal: NIM sudah terdaftar!");
+      toastError("Gagal: NIDN sudah terdaftar!");
       return;
     }
     try {
-      await storeMahasiswa(newData);
-      fetchMahasiswa();
-      toastSuccess("Mahasiswa berhasil ditambah!");
+      await storeDosen(newData);
+      fetchDosen();
+      toastSuccess("Dosen berhasil ditambah!");
       setIsModalOpen(false);
     } catch (err) {
-      toastError("Gagal menambahkan data mahasiswa");
+      toastError("Gagal menambahkan data dosen");
     }
   };
 
-  const updateMahasiswaData = async (newData) => {
+  const updateDosenData = async (newData) => {
     confirmUpdate(async () => {
       try {
-        await updateMahasiswa(selectedId, { id: selectedId, ...newData });
-        fetchMahasiswa();
-        toastSuccess("Mahasiswa berhasil di-edit!");
+        await updateDosen(selectedId, { id: selectedId, ...newData });
+        fetchDosen();
+        toastSuccess("Dosen berhasil di-edit!");
         setIsModalOpen(false);
       } catch (err) {
         toastError("Gagal memperbarui data");
@@ -85,23 +82,23 @@ const Mahasiswa = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!form.nim || !form.nama) {
-      toastError("NIM dan Nama wajib diisi!");
+    if (!form.nidn || !form.nama || !form.email || !form.bidang) {
+      toastError("Semua field wajib diisi!");
       return;
     }
     if (isEdit) {
-      updateMahasiswaData(form);
+      updateDosenData(form);
     } else {
-      storeMahasiswaData(form);
+      storeDosenData(form);
     }
   };
 
   const handleDelete = (id) => {
     confirmDelete(async () => {
       try {
-        await deleteMahasiswa(id);
-        fetchMahasiswa();
-        toastSuccess("Mahasiswa berhasil terhapus!");
+        await deleteDosen(id);
+        fetchDosen();
+        toastSuccess("Dosen berhasil terhapus!");
       } catch (err) {
         toastError("Gagal menghapus data");
       }
@@ -112,26 +109,25 @@ const Mahasiswa = () => {
     <>
       <div className="bg-white shadow rounded-lg p-4">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-semibold text-gray-800">Daftar Mahasiswa</h2>
+          <h2 className="text-lg font-semibold text-gray-800">Daftar Dosen</h2>
           <button 
             onClick={openAddModal} 
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
           >
-            + Tambah Mahasiswa
+            + Tambah Dosen
           </button>
         </div>
 
-        {/* Table Mahasiswa */}
-        <MahasiswaTable 
-          data={mahasiswa} 
+        {/* Table Dosen */}
+        <DosenTable 
+          data={dosen} 
           onEdit={handleEdit} 
           onDelete={handleDelete} 
-          onDetail={(id) => navigate(`/admin/mahasiswa/${id}`)}
         />
       </div>
 
       {/* Modal Form */}
-      <MahasiswaModal 
+      <DosenModal 
         isOpen={isModalOpen}
         isEdit={isEdit}
         form={form}
@@ -143,4 +139,4 @@ const Mahasiswa = () => {
   );
 };
 
-export default Mahasiswa;
+export default Dosen;

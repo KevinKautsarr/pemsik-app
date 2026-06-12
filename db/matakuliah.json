@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "kodemk": "A11.54301",
+    "nama": "Pemrograman Sisi Klien",
+    "sks": 3,
+    "semester": 4
+  },
+  {
+    "id": 2,
+    "kodemk": "A11.54302",
+    "nama": "Analisis dan Perancangan Sistem",
+    "sks": 4,
+    "semester": 4
+  }
+]

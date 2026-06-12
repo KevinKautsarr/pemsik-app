@@ -3,7 +3,7 @@ import Modal from '../../../Components/Organisms/Modal';
 import Input from "../../../Components/Atoms/Input";
 import Label from "../../../Components/Atoms/Label";
 
-const MahasiswaModal = ({
+const DosenModal = ({
   isOpen,
   isEdit,
   form,
@@ -17,17 +17,17 @@ const MahasiswaModal = ({
     <Modal 
       isOpen={isOpen} 
       onClose={onClose} 
-      title={isEdit ? "Edit Mahasiswa" : "Tambah Mahasiswa"}
+      title={isEdit ? "Edit Dosen" : "Tambah Dosen"}
     >
       <form onSubmit={onSubmit} className="space-y-4">
         <div>
-          <Label htmlFor="nim">NIM</Label>
+          <Label htmlFor="nidn">NIDN</Label>
           <Input 
-            name="nim"
-            value={form.nim}
+            name="nidn"
+            value={form.nidn}
             onChange={onChange}
-            readOnly={isEdit} // NIM tidak bisa diubah saat edit
-            placeholder="Masukkan NIM"
+            readOnly={isEdit}
+            placeholder="Masukkan NIDN"
             required
             className="mt-1"
           />
@@ -39,6 +39,29 @@ const MahasiswaModal = ({
             value={form.nama}
             onChange={onChange}
             placeholder="Masukkan Nama"
+            required
+            className="mt-1"
+          />
+        </div>
+        <div>
+          <Label htmlFor="email">Email</Label>
+          <Input 
+            type="email"
+            name="email"
+            value={form.email}
+            onChange={onChange}
+            placeholder="Masukkan Email"
+            required
+            className="mt-1"
+          />
+        </div>
+        <div>
+          <Label htmlFor="bidang">Bidang Keahlian</Label>
+          <Input 
+            name="bidang"
+            value={form.bidang}
+            onChange={onChange}
+            placeholder="Masukkan Bidang Keahlian"
             required
             className="mt-1"
           />
@@ -63,4 +86,4 @@ const MahasiswaModal = ({
   );
 };
 
-export default MahasiswaModal;
+export default DosenModal;

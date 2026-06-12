@@ -4,7 +4,7 @@ const Label = ({ htmlFor, children, className = "" }) => {
   return (
     <label
       htmlFor={htmlFor}
-      className={`block text-xs font-black text-slate-400 mb-2 uppercase tracking-[0.2em] ${className}`}
+      className={`block text-sm font-medium text-gray-700 ${className}`}
     >
       {children}
     </label>
