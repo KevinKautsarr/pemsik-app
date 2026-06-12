@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient, keepPreviousData } from "@tanstack/react-query";
 import {
   getAllMahasiswa,
   storeMahasiswa,
@@ -7,12 +7,16 @@ import {
 } from "@/Utils/Apis/MahasiswaApi";
 import { toastSuccess, toastError } from "@/Utils/Helpers/ToastHelpers";
 
-// Ambil semua mahasiswa
-export const useMahasiswa = () =>
+// Ambil semua mahasiswa (dengan query params)
+export const useMahasiswa = (query = {}) =>
   useQuery({
-    queryKey: ["mahasiswa"],
-    queryFn: getAllMahasiswa,
-    select: (res) => res?.data ?? [],
+    queryKey: ["mahasiswa", query],
+    queryFn: () => getAllMahasiswa(query),
+    select: (res) => ({
+      data: res?.data ?? [],
+      total: parseInt(res?.headers?.["x-total-count"] ?? "0", 10),
+    }),
+    placeholderData: keepPreviousData,
   });
 
 // Tambah

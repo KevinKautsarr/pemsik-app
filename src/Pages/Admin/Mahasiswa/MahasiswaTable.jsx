@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAuthStateContext } from '../../../Utils/Contexts/AuthContext';
 
-const MahasiswaTable = ({ data = [], onEdit, onDelete, onDetail }) => {
+const MahasiswaTable = ({ data = [], onEdit, onDelete, onDetail, isLoading }) => {
   const { user } = useAuthStateContext();
 
   return (
@@ -15,7 +15,16 @@ const MahasiswaTable = ({ data = [], onEdit, onDelete, onDetail }) => {
           </tr>
         </thead>
         <tbody>
-          {data.length === 0 ? (
+          {isLoading ? (
+            <tr>
+              <td colSpan="3" className="py-8 text-center text-gray-500 font-medium">
+                <div className="flex justify-center items-center space-x-2">
+                  <div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                  <span>Memuat data mahasiswa...</span>
+                </div>
+              </td>
+            </tr>
+          ) : data.length === 0 ? (
             <tr>
               <td colSpan="3" className="py-4 text-center text-gray-400">
                 Tidak ada data mahasiswa.

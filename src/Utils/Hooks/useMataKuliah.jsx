@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient, keepPreviousData } from "@tanstack/react-query";
 import {
   getAllMatakuliah,
   storeMatakuliah,
@@ -7,12 +7,16 @@ import {
 } from "@/Utils/Apis/MatakuliahApi";
 import { toastSuccess, toastError } from "@/Utils/Helpers/ToastHelpers";
 
-// Ambil semua mata kuliah
-export const useMataKuliah = () =>
+// Ambil semua mata kuliah (dengan query params)
+export const useMataKuliah = (query = {}) =>
   useQuery({
-    queryKey: ["mata-kuliah"],
-    queryFn: getAllMatakuliah,
-    select: (res) => res?.data ?? [],
+    queryKey: ["mata-kuliah", query],
+    queryFn: () => getAllMatakuliah(query),
+    select: (res) => ({
+      data: res?.data ?? [],
+      total: parseInt(res?.headers?.["x-total-count"] ?? "0", 10),
+    }),
+    placeholderData: keepPreviousData,
   });
 
 // Tambah

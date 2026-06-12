@@ -1,7 +1,7 @@
 import axios from "@/Utils/AxiosInstance";
 
 // Ambil semua matakuliah
-export const getAllMatakuliah = () => axios.get("/matakuliah");
+export const getAllMatakuliah = (params = {}) => axios.get("/matakuliah", { params });
 
 // Ambil 1 matakuliah
 export const getMatakuliah = (id) => axios.get(`/matakuliah/${id}`);

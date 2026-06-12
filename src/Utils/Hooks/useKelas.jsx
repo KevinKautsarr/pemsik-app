@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient, keepPreviousData } from "@tanstack/react-query";
 import {
   getAllKelas,
   storeKelas,
@@ -7,12 +7,16 @@ import {
 } from "@/Utils/Apis/KelasApi";
 import { toastSuccess, toastError } from "@/Utils/Helpers/ToastHelpers";
 
-// Ambil semua kelas
-export const useKelas = () =>
+// Ambil semua kelas (dengan query params)
+export const useKelas = (query = {}) =>
   useQuery({
-    queryKey: ["kelas"],
-    queryFn: getAllKelas,
-    select: (res) => res?.data ?? [],
+    queryKey: ["kelas", query],
+    queryFn: () => getAllKelas(query),
+    select: (res) => ({
+      data: res?.data ?? [],
+      total: parseInt(res?.headers?.["x-total-count"] ?? "0", 10),
+    }),
+    placeholderData: keepPreviousData,
   });
 
 // Tambah
