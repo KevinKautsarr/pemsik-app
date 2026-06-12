@@ -47,7 +47,7 @@ const Mahasiswa = () => {
   const { mutate: remove } = useDeleteMahasiswa();
 
   // --- LOCAL FORM STATE ---
-  const [form, setForm] = useState({ nim: '', nama: '' });
+  const [form, setForm] = useState({ nim: '', nama: '', name: '', max_sks: 0 });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
@@ -55,21 +55,39 @@ const Mahasiswa = () => {
   // --- FORM HANDLERS ---
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm({
-      ...form,
-      [name]: value
-    });
+    if (name === "nama" || name === "name") {
+      setForm({
+        ...form,
+        nama: value,
+        name: value
+      });
+    } else if (name === "max_sks") {
+      setForm({
+        ...form,
+        max_sks: parseInt(value, 10) || 0
+      });
+    } else {
+      setForm({
+        ...form,
+        [name]: value
+      });
+    }
   };
 
   const openAddModal = () => {
-    setForm({ nim: '', nama: '' });
+    setForm({ nim: '', nama: '', name: '', max_sks: 0 });
     setSelectedId(null);
     setIsEdit(false);
     setIsModalOpen(true);
   };
 
   const handleEdit = (mhs) => {
-    setForm({ nim: mhs.nim, nama: mhs.nama });
+    setForm({ 
+      nim: mhs.nim, 
+      nama: mhs.nama || mhs.name || '', 
+      name: mhs.name || mhs.nama || '', 
+      max_sks: mhs.max_sks || 0 
+    });
     setSelectedId(mhs.id);
     setIsEdit(true);
     setIsModalOpen(true);
@@ -77,20 +95,44 @@ const Mahasiswa = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!form.nim || !form.nama) {
-      toastError("NIM dan Nama wajib diisi!");
+    if (!form.nim || !(form.nama || form.name) || form.max_sks === undefined || form.max_sks === '') {
+      toastError("NIM, Nama dan Max SKS wajib diisi!");
       return;
     }
     if (isEdit) {
       confirmUpdate(() => {
-        update({ id: selectedId, data: { id: selectedId, ...form } });
+        const existingMhs = mahasiswa.find(m => m.id === selectedId) || {};
+        const payload = {
+          ...existingMhs,
+          nim: form.nim,
+          nama: form.nama || form.name,
+          name: form.name || form.nama,
+          max_sks: parseInt(form.max_sks, 10)
+        };
+        update({ id: selectedId, data: payload });
         setIsModalOpen(false);
       });
     } else {
-      // Note: check exists offline or just let API handle it
-      store(form);
+      const payload = {
+        nim: form.nim,
+        nama: form.nama || form.name,
+        name: form.name || form.nama,
+        max_sks: parseInt(form.max_sks, 10),
+        status: true,
+        ips: 0
+      };
+      store(payload);
       setIsModalOpen(false);
     }
+  };
+
+  const getTotalSks = (mhsId) => {
+    const kelasList = kelasRes?.data || [];
+    const mataKuliahList = mataKuliahRes?.data || [];
+    return kelasList
+      .filter((k) => k.mahasiswa_ids?.includes(mhsId))
+      .map((k) => mataKuliahList.find((mk) => mk.id === k.mata_kuliah_id)?.sks || 0)
+      .reduce((a, b) => a + b, 0);
   };
 
   const handleDelete = (id) => {
@@ -185,6 +227,7 @@ const Mahasiswa = () => {
               onDelete={handleDelete} 
               onDetail={(id) => navigate(`/admin/mahasiswa/${id}`)}
               isLoading={isMahasiswaLoading}
+              getTotalSks={getTotalSks}
             />
 
             {/* Pagination Controls */}

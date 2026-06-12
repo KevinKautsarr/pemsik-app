@@ -12,6 +12,7 @@ const Sidebar = ({ isOpen }) => {
     { label: "Mata Kuliah", href: "/admin/matakuliah", icon: "📚", permission: "matakuliah.page" },
     { label: "Kelas", href: "/admin/kelas", icon: "🏫", permission: "kelas.page" },
     { label: "User", href: "/admin/user", icon: "👤", permission: "user.page" },
+    { label: "Rencana Studi", href: "/admin/rencana-studi", icon: "📚", permission: "rencana-studi.page" },
   ];
 
   // Filter menu items based on user permissions

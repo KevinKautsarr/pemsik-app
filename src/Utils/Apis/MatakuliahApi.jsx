@@ -1,16 +1,21 @@
 import axios from "@/Utils/AxiosInstance";
 
-// Ambil semua matakuliah
-export const getAllMatakuliah = (params = {}) => axios.get("/matakuliah", { params });
+// Ambil semua mata kuliah
+export const getAllMataKuliah = () => axios.get("/mata-kuliah");
+export const getAllMatakuliah = getAllMataKuliah;
 
-// Ambil 1 matakuliah
-export const getMatakuliah = (id) => axios.get(`/matakuliah/${id}`);
+// Ambil satu mata kuliah
+export const getMataKuliah = (id) => axios.get(`/mata-kuliah/${id}`);
+export const getMatakuliah = getMataKuliah;
 
-// Tambah matakuliah
-export const storeMatakuliah = (data) => axios.post("/matakuliah", data);
+// Tambah mata kuliah
+export const storeMataKuliah = (data) => axios.post("/mata-kuliah", data);
+export const storeMatakuliah = storeMataKuliah;
 
-// Update matakuliah
-export const updateMatakuliah = (id, data) => axios.put(`/matakuliah/${id}`, data);
+// Update mata kuliah
+export const updateMataKuliah = (id, data) => axios.put(`/mata-kuliah/${id}`, data);
+export const updateMatakuliah = updateMataKuliah;
 
-// Hapus matakuliah
-export const deleteMatakuliah = (id) => axios.delete(`/matakuliah/${id}`);
+// Hapus mata kuliah
+export const deleteMataKuliah = (id) => axios.delete(`/mata-kuliah/${id}`);
+export const deleteMatakuliah = deleteMataKuliah;

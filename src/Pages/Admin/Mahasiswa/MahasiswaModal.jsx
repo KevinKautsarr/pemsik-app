@@ -36,9 +36,21 @@ const MahasiswaModal = ({
           <Label htmlFor="nama">Nama</Label>
           <Input 
             name="nama"
-            value={form.nama}
+            value={form.nama || form.name || ''}
             onChange={onChange}
             placeholder="Masukkan Nama"
+            required
+            className="mt-1"
+          />
+        </div>
+        <div>
+          <Label htmlFor="nama">Max SKS</Label>
+          <Input 
+            type="number"
+            name="max_sks"
+            value={form.max_sks || ''}
+            onChange={onChange}
+            placeholder="Masukkan Max SKS"
             required
             className="mt-1"
           />

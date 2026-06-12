@@ -26,6 +26,9 @@ const AdminLayout = () => {
     if (path.includes('/admin/kelas')) {
       return "Kelas";
     }
+    if (path.includes('/admin/rencana-studi')) {
+      return "Rencana Studi";
+    }
     return "Dashboard";
   };
 

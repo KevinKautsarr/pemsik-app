@@ -1,14 +1,9 @@
 [
   {
-    "id": 1,
-    "nama": "TI-A"
-  },
-  {
-    "id": 2,
-    "nama": "TI-B"
-  },
-  {
-    "id": 3,
-    "nama": "TI-C"
+    "id": "1",
+    "nama": "TI-A",
+    "mata_kuliah_id": "1",
+    "dosen_id": "1",
+    "mahasiswa_ids": ["1", "2", "3", "4", "5"]
   }
 ]

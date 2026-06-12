@@ -1,16 +1,7 @@
 [
-  {
-    "id": 1,
-    "nidn": "0412088501",
-    "nama": "Dr. Eng. Faris Adi, M.T.",
-    "email": "faris.adi@dsn.dinus.ac.id",
-    "bidang": "Rekayasa Perangkat Lunak"
-  },
-  {
-    "id": 2,
-    "nidn": "0405109002",
-    "nama": "Rina Lestari, M.Kom.",
-    "email": "rina.lestari@dsn.dinus.ac.id",
-    "bidang": "Kecerdasan Buatan"
-  }
+  { "id": "1", "name": "Slamet", "nama": "Slamet", "nidn": "0412088501", "email": "slamet@dsn.dinus.ac.id", "bidang": "Rekayasa Perangkat Lunak", "max_sks": 12 },
+  { "id": "2", "name": "Tini", "nama": "Tini", "nidn": "0405109002", "email": "tini@dsn.dinus.ac.id", "bidang": "Kecerdasan Buatan", "max_sks": 10 },
+  { "id": "3", "name": "Udin", "nama": "Udin", "nidn": "0405109003", "email": "udin@dsn.dinus.ac.id", "bidang": "Kecerdasan Buatan", "max_sks": 14 },
+  { "id": "4", "name": "Vina", "nama": "Vina", "nidn": "0405109004", "email": "vina@dsn.dinus.ac.id", "bidang": "Kecerdasan Buatan", "max_sks": 16 },
+  { "id": "5", "name": "Wawan", "nama": "Wawan", "nidn": "0405109005", "email": "wawan@dsn.dinus.ac.id", "bidang": "Kecerdasan Buatan", "max_sks": 8 }
 ]

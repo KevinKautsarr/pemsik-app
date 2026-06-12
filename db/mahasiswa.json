@@ -1,23 +1,22 @@
 [
-  {
-    "id": 1,
-    "nim": "20211001",
-    "nama": "Muhammad Kevin",
-    "status": true,
-    "ips": 3.85
-  },
-  {
-    "id": 2,
-    "nim": "20211002",
-    "nama": "Siti Aminah",
-    "status": true,
-    "ips": 3.75
-  },
-  {
-    "id": 3,
-    "nim": "20211003",
-    "nama": "Budi Santoso",
-    "status": false,
-    "ips": 3.20
-  }
+  { "id": "1", "name": "Andi", "nama": "Andi", "nim": "M001", "max_sks": 18, "status": true, "ips": 3.5 },
+  { "id": "2", "name": "Budi", "nama": "Budi", "nim": "M002", "max_sks": 20, "status": true, "ips": 3.6 },
+  { "id": "3", "name": "Citra", "nama": "Citra", "nim": "M003", "max_sks": 22, "status": true, "ips": 3.7 },
+  { "id": "4", "name": "Dina", "nama": "Dina", "nim": "M004", "max_sks": 18, "status": true, "ips": 3.4 },
+  { "id": "5", "name": "Eko", "nama": "Eko", "nim": "M005", "max_sks": 24, "status": true, "ips": 3.8 },
+  { "id": "6", "name": "Fajar", "nama": "Fajar", "nim": "M006", "max_sks": 21, "status": true, "ips": 3.5 },
+  { "id": "7", "name": "Gita", "nama": "Gita", "nim": "M007", "max_sks": 20, "status": true, "ips": 3.6 },
+  { "id": "8", "name": "Hani", "nama": "Hani", "nim": "M008", "max_sks": 18, "status": true, "ips": 3.3 },
+  { "id": "9", "name": "Iwan", "nama": "Iwan", "nim": "M009", "max_sks": 20, "status": true, "ips": 3.4 },
+  { "id": "10", "name": "Joko", "nama": "Joko", "nim": "M010", "max_sks": 18, "status": true, "ips": 3.2 },
+  { "id": "11", "name": "Kiki", "nama": "Kiki", "nim": "M011", "max_sks": 24, "status": true, "ips": 3.9 },
+  { "id": "12", "name": "Lia", "nama": "Lia", "nim": "M012", "max_sks": 20, "status": true, "ips": 3.5 },
+  { "id": "13", "name": "Maya", "nama": "Maya", "nim": "M013", "max_sks": 18, "status": true, "ips": 3.3 },
+  { "id": "14", "name": "Nina", "nama": "Nina", "nim": "M014", "max_sks": 22, "status": true, "ips": 3.6 },
+  { "id": "15", "name": "Oki", "nama": "Oki", "nim": "M015", "max_sks": 20, "status": true, "ips": 3.4 },
+  { "id": "16", "name": "Putri", "nama": "Putri", "nim": "M016", "max_sks": 18, "status": true, "ips": 3.2 },
+  { "id": "17", "name": "Qila", "nama": "Qila", "nim": "M017", "max_sks": 18, "status": true, "ips": 3.3 },
+  { "id": "18", "name": "Rudi", "nama": "Rudi", "nim": "M018", "max_sks": 21, "status": true, "ips": 3.5 },
+  { "id": "19", "name": "Salsa", "nama": "Salsa", "nim": "M019", "max_sks": 18, "status": true, "ips": 3.1 },
+  { "id": "20", "name": "Tino", "nama": "Tino", "nim": "M020", "max_sks": 18, "status": true, "ips": 3.2 }
 ]

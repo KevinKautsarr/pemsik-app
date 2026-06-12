@@ -29,7 +29,12 @@
       "kelas.delete",
       "user.page",
       "user.read",
-      "user.update"
+      "user.update",
+      "rencana-studi.page",
+      "rencana-studi.read",
+      "rencana-studi.create",
+      "rencana-studi.update",
+      "rencana-studi.delete"
     ]
   },
   {
@@ -43,7 +48,9 @@
       "mahasiswa.page",
       "mahasiswa.read",
       "krs.page",
-      "krs.read"
+      "krs.read",
+      "rencana-studi.page",
+      "rencana-studi.read"
     ]
   }
 ]

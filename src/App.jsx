@@ -13,6 +13,7 @@ import PageNotFound from "./Pages/Error/PageNotFound";
 import AuthLayout from "./Components/Organisms/AuthLayout";
 import AdminLayout from "./Components/Organisms/AdminLayout";
 import ProtectedRoute from "./Components/ProtectedRoute";
+import RencanaStudi from "./Pages/Admin/RencanaStudi/RencanaStudi";
 import "./App.css";
 
 const router = createBrowserRouter([
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: "dashboard",
         element: <Dashboard />,
+      },
+      {
+        path: "rencana-studi",
+        element: <RencanaStudi />,
       },
       {
         path: "mahasiswa",
