@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, Navigate } from 'react-router-dom';
 import Form from '../../Components/Molecules/Form';
 import { login } from '../../Utils/Apis/AuthApi';
 import { toastSuccess, toastError } from '../../Utils/Helpers/ToastHelpers';
+import { useAuthStateContext } from '../../Utils/Contexts/AuthContext';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { user, setUser } = useAuthStateContext();
   const [formData, setFormData] = useState({ email: '', password: '' });
+
+  // Cek user saat render, jika sudah login langsung redirect ke admin
+  if (user) {
+    return <Navigate to="/admin" replace />;
+  }
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -16,10 +23,13 @@ const Login = () => {
     e.preventDefault();
     const { email, password } = formData;
     try {
-      const user = await login(email, password);
-      localStorage.setItem("user", JSON.stringify(user));
+      const loggedInUser = await login(email, password);
+      setUser(loggedInUser); // Simpan ke context & localStorage
       toastSuccess("Login berhasil!");
-      navigate('/admin');
+      
+      setTimeout(() => {
+        navigate('/admin');
+      }, 10); // beri waktu React update context
     } catch (err) {
       toastError(err.message);
     }

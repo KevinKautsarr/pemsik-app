@@ -6,6 +6,7 @@ import Mahasiswa from "./Pages/Admin/Mahasiswa/Mahasiswa";
 import MahasiswaDetail from "./Pages/Admin/MahasiswaDetail";
 import Dosen from "./Pages/Admin/Dosen/Dosen";
 import Matakuliah from "./Pages/Admin/Matakuliah/Matakuliah";
+import User from "./Pages/Admin/User/User";
 import Dashboard from "./Pages/Admin/Dashboard";
 import PageNotFound from "./Pages/Error/PageNotFound";
 import AuthLayout from "./Components/Organisms/AuthLayout";
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
       {
         path: "matakuliah",
         element: <Matakuliah />,
+      },
+      {
+        path: "user",
+        element: <User />,
       },
     ],
   },

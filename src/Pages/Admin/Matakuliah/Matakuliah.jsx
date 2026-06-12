@@ -4,8 +4,11 @@ import MatakuliahTable from './MatakuliahTable';
 import MatakuliahModal from './MatakuliahModal';
 import { confirmDelete, confirmUpdate } from '../../../Utils/Helpers/SwalHelpers';
 import { toastSuccess, toastError } from '../../../Utils/Helpers/ToastHelpers';
+import { useAuthStateContext } from '../../../Utils/Contexts/AuthContext';
 
 const Matakuliah = () => {
+  const { user } = useAuthStateContext();
+
   // --- STATE MANAGEMENT ---
   const [matakuliah, setMatakuliah] = useState([]);
   const [form, setForm] = useState({ kodemk: '', nama: '', sks: '', semester: '' });
@@ -120,22 +123,28 @@ const Matakuliah = () => {
   return (
     <>
       <div className="bg-white shadow rounded-lg p-4">
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex justify-between items-center mb-4 border-b border-gray-100 pb-2">
           <h2 className="text-lg font-semibold text-gray-800">Daftar Mata Kuliah</h2>
-          <button 
-            onClick={openAddModal} 
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-          >
-            + Tambah Mata Kuliah
-          </button>
+          {user?.permission?.includes("matakuliah.create") && (
+            <button 
+              onClick={openAddModal} 
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+            >
+              + Tambah Mata Kuliah
+            </button>
+          )}
         </div>
 
         {/* Table Mata Kuliah */}
-        <MatakuliahTable 
-          data={matakuliah} 
-          onEdit={handleEdit} 
-          onDelete={handleDelete} 
-        />
+        {user?.permission?.includes("matakuliah.read") ? (
+          <MatakuliahTable 
+            data={matakuliah} 
+            onEdit={handleEdit} 
+            onDelete={handleDelete} 
+          />
+        ) : (
+          <p className="text-center text-gray-500 py-6">Anda tidak memiliki hak akses untuk melihat data mata kuliah.</p>
+        )}
       </div>
 
       {/* Modal Form */}

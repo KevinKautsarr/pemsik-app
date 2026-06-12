@@ -4,8 +4,11 @@ import DosenTable from './DosenTable';
 import DosenModal from './DosenModal';
 import { confirmDelete, confirmUpdate } from '../../../Utils/Helpers/SwalHelpers';
 import { toastSuccess, toastError } from '../../../Utils/Helpers/ToastHelpers';
+import { useAuthStateContext } from '../../../Utils/Contexts/AuthContext';
 
 const Dosen = () => {
+  const { user } = useAuthStateContext();
+
   // --- STATE MANAGEMENT ---
   const [dosen, setDosen] = useState([]);
   const [form, setForm] = useState({ nidn: '', nama: '', email: '', bidang: '' });
@@ -108,22 +111,28 @@ const Dosen = () => {
   return (
     <>
       <div className="bg-white shadow rounded-lg p-4">
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex justify-between items-center mb-4 border-b border-gray-100 pb-2">
           <h2 className="text-lg font-semibold text-gray-800">Daftar Dosen</h2>
-          <button 
-            onClick={openAddModal} 
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-          >
-            + Tambah Dosen
-          </button>
+          {user?.permission?.includes("dosen.create") && (
+            <button 
+              onClick={openAddModal} 
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+            >
+              + Tambah Dosen
+            </button>
+          )}
         </div>
 
         {/* Table Dosen */}
-        <DosenTable 
-          data={dosen} 
-          onEdit={handleEdit} 
-          onDelete={handleDelete} 
-        />
+        {user?.permission?.includes("dosen.read") ? (
+          <DosenTable 
+            data={dosen} 
+            onEdit={handleEdit} 
+            onDelete={handleDelete} 
+          />
+        ) : (
+          <p className="text-center text-gray-500 py-6">Anda tidak memiliki hak akses untuk melihat data dosen.</p>
+        )}
       </div>
 
       {/* Modal Form */}

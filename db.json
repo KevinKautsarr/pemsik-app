@@ -1,14 +1,14 @@
 {
   "dosen": [
     {
-      "id": "1",
+      "id": 1,
       "nidn": "0412088501",
       "nama": "Dr. Eng. Faris Adi, M.T.",
       "email": "faris.adi@dsn.dinus.ac.id",
       "bidang": "Rekayasa Perangkat Lunak"
     },
     {
-      "id": "2",
+      "id": 2,
       "nidn": "0405109002",
       "nama": "Rina Lestari, M.Kom.",
       "email": "rina.lestari@dsn.dinus.ac.id",
@@ -17,21 +17,21 @@
   ],
   "mahasiswa": [
     {
-      "id": "1",
+      "id": 1,
       "nim": "20211001",
       "nama": "Muhammad Kevin",
       "status": true,
       "ips": 3.85
     },
     {
-      "id": "2",
+      "id": 2,
       "nim": "20211002",
       "nama": "Siti Aminah",
       "status": true,
       "ips": 3.75
     },
     {
-      "id": "3",
+      "id": 3,
       "nim": "20211003",
       "nama": "Budi Santoso",
       "status": false,
@@ -40,14 +40,14 @@
   ],
   "matakuliah": [
     {
-      "id": "1",
+      "id": 1,
       "kodemk": "A11.54301",
       "nama": "Pemrograman Sisi Klien",
       "sks": 3,
       "semester": 4
     },
     {
-      "id": "2",
+      "id": 2,
       "kodemk": "A11.54302",
       "nama": "Analisis dan Perancangan Sistem",
       "sks": 4,
@@ -56,23 +56,46 @@
   ],
   "user": [
     {
-      "id": "1",
+      "id": 1,
       "name": "Admin 1",
       "email": "admin@mail.com",
-      "password": "admin123"
+      "password": "admin123",
+      "role": "admin",
+      "permission": [
+        "dashboard.page",
+        "mahasiswa.page",
+        "mahasiswa.read",
+        "mahasiswa.create",
+        "mahasiswa.update",
+        "mahasiswa.delete",
+        "dosen.page",
+        "dosen.read",
+        "dosen.create",
+        "dosen.update",
+        "dosen.delete",
+        "matakuliah.page",
+        "matakuliah.read",
+        "matakuliah.create",
+        "matakuliah.update",
+        "matakuliah.delete",
+        "user.page",
+        "user.read",
+        "user.update"
+      ]
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "Mahasiswa 1",
       "email": "mahasiswa@mail.com",
-      "password": "mahasiswa123"
-    },
-    {
-      "name": "Budi Baru",
-      "email": "budi@mail.com",
-      "password": "budi123",
-      "id": "mHAJyTp2vIw"
+      "password": "mahasiswa123",
+      "role": "mahasiswa",
+      "permission": [
+        "dashboard.page",
+        "mahasiswa.page",
+        "mahasiswa.read",
+        "krs.page",
+        "krs.read"
+      ]
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }

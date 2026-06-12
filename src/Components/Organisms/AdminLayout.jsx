@@ -20,6 +20,9 @@ const AdminLayout = () => {
     if (path.includes('/admin/matakuliah')) {
       return "Mata Kuliah";
     }
+    if (path.includes('/admin/user')) {
+      return "User Management";
+    }
     return "Dashboard";
   };
 

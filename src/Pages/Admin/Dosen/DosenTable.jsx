@@ -1,6 +1,9 @@
 import React from 'react';
+import { useAuthStateContext } from '../../../Utils/Contexts/AuthContext';
 
 const DosenTable = ({ data = [], onEdit, onDelete }) => {
+  const { user } = useAuthStateContext();
+
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-sm text-gray-700 font-normal">
@@ -28,18 +31,22 @@ const DosenTable = ({ data = [], onEdit, onDelete }) => {
                 <td className="py-2 px-4">{dsn.email}</td>
                 <td className="py-2 px-4">{dsn.bidang}</td>
                 <td className="py-2 px-4 text-center space-x-2">
-                  <button 
-                    onClick={() => onEdit(dsn)} 
-                    className="bg-yellow-500 text-white text-sm px-3 py-1 rounded hover:bg-yellow-600 transition"
-                  >
-                    Edit
-                  </button>
-                  <button 
-                    onClick={() => onDelete(dsn.id)} 
-                    className="bg-red-500 text-white text-sm px-3 py-1 rounded hover:bg-red-600 transition"
-                  >
-                    Hapus
-                  </button>
+                  {user?.permission?.includes("dosen.update") && (
+                    <button 
+                      onClick={() => onEdit(dsn)} 
+                      className="bg-yellow-500 text-white text-sm px-3 py-1 rounded hover:bg-yellow-600 transition"
+                    >
+                      Edit
+                    </button>
+                  )}
+                  {user?.permission?.includes("dosen.delete") && (
+                    <button 
+                      onClick={() => onDelete(dsn.id)} 
+                      className="bg-red-500 text-white text-sm px-3 py-1 rounded hover:bg-red-600 transition"
+                    >
+                      Hapus
+                    </button>
+                  )}
                 </td>
               </tr>
             ))

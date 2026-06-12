@@ -1,6 +1,9 @@
 import React from 'react';
+import { useAuthStateContext } from '../../../Utils/Contexts/AuthContext';
 
 const MatakuliahTable = ({ data = [], onEdit, onDelete }) => {
+  const { user } = useAuthStateContext();
+
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-sm text-gray-700 font-normal">
@@ -28,18 +31,22 @@ const MatakuliahTable = ({ data = [], onEdit, onDelete }) => {
                 <td className="py-2 px-4 text-center">{mk.sks}</td>
                 <td className="py-2 px-4 text-center">{mk.semester}</td>
                 <td className="py-2 px-4 text-center space-x-2">
-                  <button 
-                    onClick={() => onEdit(mk)} 
-                    className="bg-yellow-500 text-white text-sm px-3 py-1 rounded hover:bg-yellow-600 transition"
-                  >
-                    Edit
-                  </button>
-                  <button 
-                    onClick={() => onDelete(mk.id)} 
-                    className="bg-red-500 text-white text-sm px-3 py-1 rounded hover:bg-red-600 transition"
-                  >
-                    Hapus
-                  </button>
+                  {user?.permission?.includes("matakuliah.update") && (
+                    <button 
+                      onClick={() => onEdit(mk)} 
+                      className="bg-yellow-500 text-white text-sm px-3 py-1 rounded hover:bg-yellow-600 transition"
+                    >
+                      Edit
+                    </button>
+                  )}
+                  {user?.permission?.includes("matakuliah.delete") && (
+                    <button 
+                      onClick={() => onDelete(mk.id)} 
+                      className="bg-red-500 text-white text-sm px-3 py-1 rounded hover:bg-red-600 transition"
+                    >
+                      Hapus
+                    </button>
+                  )}
                 </td>
               </tr>
             ))

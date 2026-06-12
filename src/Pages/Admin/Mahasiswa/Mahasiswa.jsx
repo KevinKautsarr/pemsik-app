@@ -5,9 +5,11 @@ import MahasiswaTable from './MahasiswaTable';
 import MahasiswaModal from './MahasiswaModal';
 import { confirmDelete, confirmUpdate } from '../../../Utils/Helpers/SwalHelpers';
 import { toastSuccess, toastError } from '../../../Utils/Helpers/ToastHelpers';
+import { useAuthStateContext } from '../../../Utils/Contexts/AuthContext';
 
 const Mahasiswa = () => {
   const navigate = useNavigate();
+  const { user } = useAuthStateContext();
 
   // --- STATE MANAGEMENT (LIFTED STATE) ---
   const [mahasiswa, setMahasiswa] = useState([]);
@@ -111,23 +113,29 @@ const Mahasiswa = () => {
   return (
     <>
       <div className="bg-white shadow rounded-lg p-4">
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex justify-between items-center mb-4 border-b border-gray-100 pb-2">
           <h2 className="text-lg font-semibold text-gray-800">Daftar Mahasiswa</h2>
-          <button 
-            onClick={openAddModal} 
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-          >
-            + Tambah Mahasiswa
-          </button>
+          {user?.permission?.includes("mahasiswa.create") && (
+            <button 
+              onClick={openAddModal} 
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+            >
+              + Tambah Mahasiswa
+            </button>
+          )}
         </div>
 
         {/* Table Mahasiswa */}
-        <MahasiswaTable 
-          data={mahasiswa} 
-          onEdit={handleEdit} 
-          onDelete={handleDelete} 
-          onDetail={(id) => navigate(`/admin/mahasiswa/${id}`)}
-        />
+        {user?.permission?.includes("mahasiswa.read") ? (
+          <MahasiswaTable 
+            data={mahasiswa} 
+            onEdit={handleEdit} 
+            onDelete={handleDelete} 
+            onDetail={(id) => navigate(`/admin/mahasiswa/${id}`)}
+          />
+        ) : (
+          <p className="text-center text-gray-500 py-6">Anda tidak memiliki hak akses untuk melihat data mahasiswa.</p>
+        )}
       </div>
 
       {/* Modal Form */}

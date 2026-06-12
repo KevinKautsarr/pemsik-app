@@ -1,13 +1,23 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useAuthStateContext } from '../../Utils/Contexts/AuthContext';
 
 const Sidebar = ({ isOpen }) => {
+  const { user } = useAuthStateContext();
+
   const menuItems = [
-    { label: "Dashboard", href: "/admin", icon: "🏠" },
-    { label: "Mahasiswa", href: "/admin/mahasiswa", icon: "🎓" },
-    { label: "Dosen", href: "/admin/dosen", icon: "👨‍🏫" },
-    { label: "Mata Kuliah", href: "/admin/matakuliah", icon: "📚" },
+    { label: "Dashboard", href: "/admin", icon: "🏠", permission: "dashboard.page" },
+    { label: "Mahasiswa", href: "/admin/mahasiswa", icon: "🎓", permission: "mahasiswa.page" },
+    { label: "Dosen", href: "/admin/dosen", icon: "👨‍🏫", permission: "dosen.page" },
+    { label: "Mata Kuliah", href: "/admin/matakuliah", icon: "📚", permission: "matakuliah.page" },
+    { label: "User", href: "/admin/user", icon: "👤", permission: "user.page" },
   ];
+
+  // Filter menu items based on user permissions
+  const filteredMenuItems = menuItems.filter(item => {
+    if (!user || !user.permission) return false;
+    return user.permission.includes(item.permission);
+  });
 
   return (
     <aside 
@@ -17,12 +27,12 @@ const Sidebar = ({ isOpen }) => {
       }`}
     >
       <div className="flex justify-between items-center p-4 border-b border-blue-700 h-16">
-        <span className={`text-2xl font-bold transition-all duration-300 ${isOpen ? 'block' : 'hidden'}`}>
-          Admin
+        <span className={`text-xl font-bold transition-all duration-300 ${isOpen ? 'block' : 'hidden'}`}>
+          {user?.role === 'admin' ? 'Admin Portal' : 'Portal Mhs'}
         </span>
       </div>
       <nav className="p-4 space-y-2">
-        {menuItems.map((item, idx) => (
+        {filteredMenuItems.map((item, idx) => (
           <NavLink
             key={idx}
             to={item.href}

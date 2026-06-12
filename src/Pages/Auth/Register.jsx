@@ -20,7 +20,23 @@ const Register = () => {
       return;
     }
     try {
-      await registerUser({ name, email, password });
+      await registerUser({ 
+        name, 
+        email, 
+        password,
+        role: 'mahasiswa',
+        permission: [
+          "dashboard.page",
+          "mahasiswa.page",
+          "mahasiswa.read",
+          "dosen.page",
+          "dosen.read",
+          "matakuliah.page",
+          "matakuliah.read",
+          "krs.page",
+          "krs.read"
+        ]
+      });
       toastSuccess("Registrasi berhasil! Silakan login.");
       navigate('/login');
     } catch (err) {
