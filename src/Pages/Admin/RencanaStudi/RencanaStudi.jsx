@@ -10,7 +10,7 @@ import {
 } from "@/Utils/Apis/KelasApi";
 import { getAllDosen } from "@/Utils/Apis/DosenApi";
 import { getAllMahasiswa } from "@/Utils/Apis/MahasiswaApi";
-import { getAllMataKuliah } from "@/Utils/Apis/MataKuliahApi";
+import { getAllMataKuliah } from "@/Utils/Apis/MatakuliahApi";
 import {
   getTotalSksDosen,
   getTotalSksMahasiswa,

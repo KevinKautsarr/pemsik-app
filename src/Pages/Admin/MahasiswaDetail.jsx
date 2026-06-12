@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getMahasiswa } from '../../Utils/Apis/MahasiswaApi';
 import { getAllKelas } from '../../Utils/Apis/KelasApi';
-import { getAllMataKuliah } from '../../Utils/Apis/MataKuliahApi';
+import { getAllMataKuliah } from '../../Utils/Apis/MatakuliahApi';
 import { toastError } from '../../Utils/Helpers/ToastHelpers';
 
 const MahasiswaDetail = () => {
