@@ -152,42 +152,14 @@
       "id": "1",
       "nama": "TI-A",
       "mata_kuliah_id": "1",
-      "dosen_id": "3",
-      "mahasiswa_ids": [
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "13",
-        "14"
-      ]
-    },
-    {
-      "id": "nmnDHPo",
-      "nama": "English",
-      "mata_kuliah_id": "3",
-      "dosen_id": "2",
-      "mahasiswa_ids": [
-        "16",
-        "13",
-        "18",
-        "19",
-        "20"
-      ]
-    },
-    {
-      "nama": "TI-COBA",
-      "mata_kuliah_id": "2",
-      "dosen_id": "5",
+      "dosen_id": "1",
       "mahasiswa_ids": [
         "1",
         "2",
         "3",
         "4",
         "5"
-      ],
-      "id": "_ieRrHM"
+      ]
     }
   ],
   "mahasiswa": [
@@ -478,6 +450,24 @@
         "rencana-studi.page",
         "rencana-studi.read"
       ]
+    },
+    {
+      "name": "Impostor",
+      "email": "kevink@gmail.com",
+      "password": "kevin123",
+      "role": "mahasiswa",
+      "permission": [
+        "dashboard.page",
+        "mahasiswa.page",
+        "mahasiswa.read",
+        "dosen.page",
+        "dosen.read",
+        "matakuliah.page",
+        "matakuliah.read",
+        "krs.page",
+        "krs.read"
+      ],
+      "id": 3
     }
   ]
 }
