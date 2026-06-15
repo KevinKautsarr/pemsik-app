@@ -450,24 +450,6 @@
         "rencana-studi.page",
         "rencana-studi.read"
       ]
-    },
-    {
-      "name": "Impostor",
-      "email": "kevink@gmail.com",
-      "password": "kevin123",
-      "role": "mahasiswa",
-      "permission": [
-        "dashboard.page",
-        "mahasiswa.page",
-        "mahasiswa.read",
-        "dosen.page",
-        "dosen.read",
-        "matakuliah.page",
-        "matakuliah.read",
-        "krs.page",
-        "krs.read"
-      ],
-      "id": 3
     }
   ]
 }
