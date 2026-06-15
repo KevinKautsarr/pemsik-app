@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const AxiosInstance = axios.create({
-  baseURL: "http://localhost:3001", // alamat json-server
+  baseURL: "/api", // Vercel API routes (production) — di-proxy ke localhost:3001 saat dev
   headers: {
     "Content-Type": "application/json",
   },
